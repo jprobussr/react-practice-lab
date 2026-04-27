@@ -1,0 +1,63 @@
+:root {
+  --bg: #1a1a1a;
+  --surface: #242424;
+  --text: #f5f5f5;
+  --muted: #a1a1a1;
+
+  --accent: #ff6f61; /* coral */
+  --accent-hover: #ff4c3b;
+
+  --border: #333;
+  --radius: 12px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+}
+
+main {
+  padding: 2rem;
+}
+
+.counter {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  max-width: 320px;
+}
+
+.counter-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.counter-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
