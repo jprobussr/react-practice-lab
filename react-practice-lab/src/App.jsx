@@ -3,51 +3,55 @@ import Counter from './components/Counter.jsx';
 import './App.css';
 
 const App = () => {
-  const [count1, setCount1] = useState(0);
-  const [count2, setCount2] = useState(10);
+  const [counters, setCounters] = useState([
+    { id: 1, title: 'Passenger Counter', count: 0, step: 1 },
+    { id: 2, title: 'Student Counter', count: 10, step: 5 },
+  ]);
 
-  const handleCount1Increment = () => {
-    setCount1((prev) => prev + 1);
+  const handleIncrement = (id) => {
+    setCounters((prevCounters) =>
+      prevCounters.map((counter) => {
+        if (counter.id === id) {
+          return {
+            ...counter,
+            count: counter.count + counter.step,
+          };
+        }
+
+        return counter;
+      }),
+    );
   };
 
-  const handleCount1Decrement = () => {
-    setCount1((prev) => prev - 1);
+  const handleDecrement = (id) => {
+    setCounters((prevCounters) =>
+      prevCounters.map((counter) => {
+        if (counter.id === id) {
+          return {
+            ...counter,
+            count: counter.count - counter.step,
+          };
+        }
+
+        return counter;
+      }),
+    );
   };
 
-  const handleCount1Reset = () => {
-    setCount1(0);
-  };
+  const handleReset = (id) => {
+    setCounters((prevCounter) =>
+      prevCounter.map((counter) => {
+        if (counter.id === id) {
+          return {
+            ...counter,
+            count: 0,
+          };
+        }
 
-  const handleCount2Increment = () => {
-    setCount2((prev) => prev + 1);
+        return counter;
+      }),
+    );
   };
-
-  const handleCount2Decrement = () => {
-    setCount2((prev) => prev - 1);
-  };
-
-  const handleCount2Reset = () => {
-    setCount2(0);
-  };
-
-  const counters = [
-    {
-      id: 1,
-      title: 'Passenger Counter',
-      count: count1,
-      onIncrement: handleCount1Increment,
-      onDecrement: handleCount1Decrement,
-      onReset: handleCount1Reset,
-    },
-    {
-      id: 2,
-      title: 'Student Counter',
-      count: count2,
-      onIncrement: handleCount2Increment,
-      onDecrement: handleCount2Decrement,
-      onReset: handleCount2Reset,
-    },
-  ];
 
   return (
     <main>
@@ -60,9 +64,9 @@ const App = () => {
               key={counter.id}
               title={counter.title}
               count={counter.count}
-              onIncrement={counter.onIncrement}
-              onDecrement={counter.onDecrement}
-              onReset={counter.onReset}
+              onIncrement={() => handleIncrement(counter.id)}
+              onDecrement={() => handleDecrement(counter.id)}
+              onReset={() => handleReset(counter.id)}
             />
           );
         })}
