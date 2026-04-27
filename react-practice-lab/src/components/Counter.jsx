@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-const Counter = ({ title }) => {
-  const [count, setCount] = useState(0);
+const Counter = ({ title, initialCount = 0, step = 1 }) => {
+  const [count, setCount] = useState(initialCount);
 
   const handleIncrement = () => {
-    setCount((prev) => prev + 1);
+    setCount((prev) => prev + step);
   };
 
   const handleDecrement = () => {
-    setCount((prev) => prev - 1);
+    setCount((prev) => prev - step);
   };
 
   const handleReset = () => {
@@ -17,9 +17,7 @@ const Counter = ({ title }) => {
 
   return (
     <section className="counter">
-      <h2>
-        {title}
-      </h2>
+      <h2>{title}</h2>
       <p className="counter-value">{count}</p>
       <div className="counter-actions">
         <button onClick={handleIncrement}>Increase</button>
