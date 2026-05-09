@@ -18,16 +18,20 @@ const App = () => {
 
   return (
     <main className="page">
-      <section className="status-card">
+      <section className={`status-card ${user.isOnline ? 'online' : ''}`}
+      >
         <p className="eyebrow">React State Exercises</p>
         <h1>{user.name}</h1>
         <p className="role">{user.role}</p>
 
-        <p className="status-text">
-          Status: {user.isOnline ? 'Online' : 'Offline'}
-        </p>
-
-        <button onClick={handleToggleStatus} className="toggle-button">Toggle Status</button>
+        <div className="card-actions">
+          <p className={`status-badge ${user.isOnline ? 'online' : 'offline'}`}>
+            Status: {user.isOnline ? 'Online' : 'Offline'}
+          </p>
+          <button onClick={handleToggleStatus} className="toggle-button">
+            {user.isOnline ? 'Go offline' : 'Go online'}
+          </button>
+        </div>
       </section>
     </main>
   );

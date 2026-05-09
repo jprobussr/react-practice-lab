@@ -98,3 +98,36 @@ select {
 .toggle-button:hover {
   background: var(--button-hover);
 }
+
+.status-card.online {
+  border-color: var(--border-active);
+  background: var(--surface-active);
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.status-badge {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.status-badge.online {
+  background: rgba(74, 222, 128, 0.14);
+  color: var(--success);
+}
+
+.status-badge.offline {
+  background: rgba(248, 113, 113, 0.14);
+  color: var(--danger);
+}
