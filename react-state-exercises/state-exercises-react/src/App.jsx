@@ -1,38 +1,24 @@
 import { useState } from 'react';
+import './App.css';
 
 const App = () => {
-  const [movies, setMovies] = useState([
-    { id: 1, title: 'The Dark Knight', genre: 'Action' },
-    { id: 2, title: 'Interstellar', genre: 'Sci-fi' },
-    { id: 3, title: 'Remember the Titans', genre: 'Drama' },
+  const [items, setItems] = useState([
+    { id: 1, name: 'Phone Charger', isPacked: false },
+    { id: 2, name: 'Toothbrush', isPacked: false },
+    { id: 3, name: 'Running Shoes', isPacked: false },
   ]);
 
-  const movieOptions = [
-    { title: 'Inception', genre: 'Sci-Fi' },
-    { title: 'Top Gun Maverick', genre: 'Action' },
-    { title: 'Whiplash', genre: 'Drama' },
-    { title: 'The Matrix', genre: 'Sci-Fi' },
-    { title: 'Creed', genre: 'Sports' },
-  ];
+  const handleTogglePacked = (id) => {
+    setItems((prevItems) => {
+      return prevItems.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            isPacked: !item.isPacked,
+          };
+        }
 
-  const handleAddMovie = () => {
-    const randomMovie =
-      movieOptions[Math.floor(Math.random() * movieOptions.length)];
-
-    const newMovie = {
-      id: crypto.randomUUID(),
-      title: randomMovie.title,
-      genre: randomMovie.genre,
-    };
-    setMovies((prevMovies) => {
-      return [...prevMovies, newMovie];
-    });
-  };
-
-  const handleRemoveMovie = (id) => {
-    setMovies((prevMovies) => {
-      return prevMovies.filter((movie) => {
-        return movie.id !== id;
+        return item;
       });
     });
   };
@@ -40,33 +26,29 @@ const App = () => {
   return (
     <main className="page">
       <section className="status-card">
-        <p className="eyebrow">React State Exercises</p>
-        <h1>Favorite Movies</h1>
-        <p className="role">Practice rendering arrays from state.</p>
+        <p className="eyebrow">React State Exercise</p>
+        <h1>Packing List</h1>
+        <p className="role">Practice updating objects inside an array.</p>
 
         <ul className="movie-list">
-          {movies.map((movie) => {
+          {items.map((item) => {
             return (
-              <li key={movie.id} className="movie-item">
+              <li className={`movie-item ${item.isPacked ? 'packed' : ''}`} key={item.id}>
                 <div>
-                  <span>{movie.title}</span>
-                  <small>{movie.genre}</small>
+                  <span>{item.name}</span>
+                  <small>{item.isPacked ? 'Packed' : 'Not Packed'}</small>
                 </div>
 
                 <button
-                  className="delete-button"
-                  onClick={() => handleRemoveMovie(movie.id)}
+                  className="toggle-button"
+                  onClick={() => handleTogglePacked(item.id)}
                 >
-                  Remove
+                  {item.isPacked ? 'Unpack' : 'Pack'}
                 </button>
               </li>
             );
           })}
         </ul>
-
-        <button className="toggle-button" onClick={handleAddMovie}>
-          Add Movie
-        </button>
       </section>
     </main>
   );
