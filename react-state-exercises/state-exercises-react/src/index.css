@@ -215,3 +215,27 @@ select {
   color: var(--muted);
   text-align: center;
 }
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity-value {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.delete-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cart-total {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: right;
+}
