@@ -2,55 +2,43 @@ import { useState } from 'react';
 import './App.css';
 
 const App = () => {
-  const [team, setTeam] = useState([
-    { id: 1, name: 'Maya Chen', role: 'Designer', isLead: false },
-    { id: 2, name: 'Jordan Lee', role: 'Developer', isLead: false },
-    { id: 3, name: 'Maya Chen', role: 'QA Tester', isLead: false },
-    { id: 4, name: 'John Probus Sr', role: 'CEO', isLead: true },
+  const [notes, setNotes] = useState([
+    {
+      id: 1,
+      text: 'Review React state patterns',
+    },
+    { id: 2, text: 'Practice array updates' },
+    {
+      id: 3,
+      text: 'Practice and improve daily.',
+    },
   ]);
 
-  const handleToggleLead = (id) => {
-    setTeam((prevTeam) => {
-      return prevTeam.map((member) => {
-        if (member.id === id) {
-          return {
-            ...member,
-            isLead: !member.isLead,
-          };
-        }
+  const [noteInput, setNoteInput] = useState('');
 
-        return member;
-      });
-    });
-  };
+  const handleAddNote = (e) => {
+    e.preventDefault();
 
-  const handleAddMember = () => {
-    const rosterOptions = [
-      { name: 'Avery Brooks', role: 'Frontend Developer' },
-      { name: 'Taylor Kim', role: 'Product Manager' },
-      { name: 'Chris Walker', role: 'Backend Developer' },
-      { name: 'Jamie Patel', role: 'UX Designer' },
-    ];
+    if (noteInput.trim() === '') {
+      return;
+    }
 
-    const randomMember =
-      rosterOptions[Math.floor(Math.random() * rosterOptions.length)];
-
-    const newMember = {
+    const newNote = {
       id: crypto.randomUUID(),
-      name: randomMember.name,
-      role: randomMember.role,
-      isLead: false,
+      text: noteInput,
     };
 
-    setTeam((prevTeam) => {
-      return [...prevTeam, newMember];
+    setNotes((prevNotes) => {
+      return [...prevNotes, newNote];
     });
+
+    setNoteInput('');
   };
 
-  const handleRemoveMember = (id) => {
-    setTeam((prevTeam) => {
-      return prevTeam.filter((member) => {
-        return member.id !== id;
+  const handleRemoveNote = (id) => {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((note) => {
+        return note.id !== id;
       });
     });
   };
@@ -59,35 +47,47 @@ const App = () => {
     <main className="page">
       <section className="status-card">
         <p className="eyebrow">React State Exercise</p>
-        <h1>Team Roster</h1>
-        <p className="role">Practice managing people in array state.</p>
+        <h1>Notes App Mini</h1>
 
-        <ul className="movie-list">
-          {team.map((member) => {
-            return (
-              <li className="movie-item" key={member.id}>
-                <div>
-                  <span>{member.name}</span>
-                  <small>{member.role}</small>
-                </div>
-                {member.isLead && <strong className="lead-badge">Lead</strong>}
+        <p className="role">
+          Practice controlled inputs and rendering user data.
+        </p>
 
-                <button
-                  className="delete-button"
-                  onClick={() => handleToggleLead(member.id)}
-                >
-                  {member.isLead ? 'Remove Lead' : 'Make Lead'}
-                </button>
+        <form className="note-form" onSubmit={handleAddNote}>
+          <input
+            type="text"
+            placeholder="Write a note"
+            className="note-input"
+            value={noteInput}
+            onChange={(e) => setNoteInput(e.target.value)}
+          />
 
-                <button className="delete-button" onClick={() => handleRemoveMember(member.id)}>Remove Member</button>
-              </li>
-            );
-          })}
-        </ul>
+          <button type="submit" className="toggle-button">
+            Add Note
+          </button>
+        </form>
 
-        <button className="toggle-button" onClick={handleAddMember}>
-          Add Team Member
-        </button>
+        {notes.length > 0 ? (
+          <ul className="movie-list">
+            {notes.map((note) => {
+              return (
+                <li className="movie-item" key={note.id}>
+                  <span>{note.text}</span>
+
+                  <button
+                    type="button"
+                    className="delete-button"
+                    onClick={() => handleRemoveNote(note.id)}
+                  >
+                    Remove
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="empty-state">No notes yet. Add your first note.</p>
+        )}
       </section>
     </main>
   );
