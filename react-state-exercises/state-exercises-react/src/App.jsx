@@ -1,89 +1,199 @@
 import { useState } from 'react';
 
+const columns = [
+  {
+    id: 'todo',
+    title: 'To Do',
+  },
+  {
+    id: 'doing',
+    title: 'Doing',
+  },
+  {
+    id: 'done',
+    title: 'Done',
+  },
+];
+
 const App = () => {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: 'Wireless Mouse', price: 24.99, quantity: 1 },
-    { id: 2, name: 'Keyboard', price: 49.99, quantity: 2 },
-    { id: 3, name: 'USB-C Cable', price: 12.99, quantity: 1 },
+  const [tasks, setTasks] = useState([
+    {
+      id: 1,
+      title: 'Review React state',
+      status: 'todo',
+    },
+    {
+      id: 2,
+      title: 'Practice updating arrays',
+      status: 'doing',
+    },
+    {
+      id: 3,
+      title: 'Commit completed exercises',
+      status: 'done',
+    },
   ]);
 
-  const handleIncreaseQuantity = (id) => {
-    setCartItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            quantity: item.quantity + 1,
-          };
-        }
+  const [taskInput, setTaskInput] = useState('');
 
-        return item;
+  const [taskStatus, setTaskStatus] = useState('todo');
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+
+    if (taskInput.trim() === '') {
+      return;
+    }
+
+    const newTask = {
+      id: crypto.randomUUID(),
+      title: taskInput,
+      status: taskStatus,
+    };
+
+    setTasks((prevTasks) => {
+      return [...prevTasks, newTask];
+    });
+
+    setTaskInput('');
+    setTaskStatus('todo')
+  };
+
+  const handleDeleteTask = (id) => {
+    setTasks((prevTasks) => {
+      return prevTasks.filter((task) => {
+        return task.id !== id;
       });
     });
   };
 
-  const handleDecreaseQuantity = (id) => {
-    setCartItems((prevItems) => {
-      return prevItems.map((item) => {
-        if (item.id === id) {
+  const handleMoveTask = (id, newStatus) => {
+    setTasks((prevTasks) => {
+      return prevTasks.map((task) => {
+        if (task.id === id) {
           return {
-            ...item,
-            quantity: item.quantity - 1,
+            ...task,
+            status: newStatus,
           };
         }
 
-        return item;
+        return task;
       });
     });
   };
-
-  const cartTotal = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity
-  }, 0);
 
   return (
     <main className="page">
-      <section className="status-card">
-        <p className="eyebrow">React State Exercise</p>
-        <h1>Shopping Cart</h1>
-        <p className="role">
-          Practice updating quantities and calculating totals.
-        </p>
+      <section className="board">
+        <header className="board-header">
+          <p className="eyebrow">React Practice</p>
+          <h1>Kanban Task Board</h1>
+          <p>
+            Practice adding, filtering, updating, and removing tasks with React
+            state.
+          </p>
+        </header>
 
-        <ul className="movie-list">
-          {cartItems.map((item) => {
+        <form className="task-form" onSubmit={handleAddTask}>
+          <label htmlFor="task-title">New Task</label>
+
+          <div className="form-row">
+            <input
+              type="text"
+              id="task-title"
+              value={taskInput}
+              placeholder="Add a new task"
+              onChange={(e) => {
+                setTaskInput(e.target.value);
+              }}
+            />
+
+            <select
+              value={taskStatus}
+              onChange={(e) => {
+                setTaskStatus(e.target.value);
+              }}
+            >
+              <option value="todo">To Do</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+
+            <button type="submit">Add Task</button>
+          </div>
+        </form>
+
+        <div className="columns-grid">
+          {columns.map((column) => {
+            const filteredTasks = tasks.filter((task) => {
+              return task.status === column.id;
+            });
+
             return (
-              <li className="movie-item" key={item.id}>
-                <div>
-                  <span>{item.name}</span>
-                  <small>
-                    ${item.price} x {item.quantity}
-                  </small>
+              <section className="task-column" key={column.id}>
+                <div className="column-header">
+                  <h2>{column.title}</h2>
+                  <span>{filteredTasks.length}</span>
                 </div>
+                <div className="task-list">
+                  {filteredTasks.length === 0 && (
+                    <p className="empty-message">No tasks here yet.</p>
+                  )}
+                  {filteredTasks.map((task) => {
+                    return (
+                      <article key={task.id} className="task-card">
+                        <p>{task.title}</p>
 
-                <div className="quantity-controls">
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDecreaseQuantity(item.id)}
-                    disabled={item.quantity === 0}
-                  >
-                    -
-                  </button>
+                        <div className="tasks-actions">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              handleDeleteTask(task.id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                          {task.status !== 'todo' && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleMoveTask(task.id, 'todo');
+                              }}
+                            >
+                              Move to To Do
+                            </button>
+                          )}
 
-                  <span className="quantity-value">
-                    {item.quantity}
-                  </span>
+                          {task.status !== 'doing' && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleMoveTask(task.id, 'doing');
+                              }}
+                            >
+                              Move to doing
+                            </button>
+                          )}
 
-                  <button className="delete-button" onClick={() => handleIncreaseQuantity(item.id)}>+</button>
+                          {task.status !== 'done' && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleMoveTask(task.id, 'done');
+                              }}
+                            >
+                              Move to done
+                            </button>
+                          )}
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
-              </li>
+              </section>
             );
           })}
-        </ul>
-
-        <p className="cart-total">
-          Total: ${cartTotal.toFixed(2)}
-        </p>
+        </div>
       </section>
     </main>
   );
