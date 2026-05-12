@@ -1,8 +1,9 @@
-import FAQAccordion from "./faq-accordion/FAQAccordion.jsx";
+import ThemeToggle from "./themeToggle/ThemeToggle.jsx";
+
 
 
 const App = () => {
-  return <FAQAccordion />
+  return <ThemeToggle />
 };
 
 export default App;

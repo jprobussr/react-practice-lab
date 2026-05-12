@@ -1,0 +1,22 @@
+.page.dark {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.page.light {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.theme-toggle {
+  width: min(100%, 700px);
+  margin: 0 auto;
+}
+
+.theme-toggle button {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  font-weight: 800;
+}
