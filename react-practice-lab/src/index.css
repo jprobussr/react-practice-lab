@@ -9,72 +9,104 @@ body {
   color: #f8fafc;
 }
 
-button {
+button,
+input {
   font: inherit;
-  cursor: pointer;
 }
 
-.page {
+.thoughts-app {
   min-height: 100vh;
-  padding: 2rem 1rem;
+  padding: 4rem 1.5rem;
 }
 
-.accordion {
-  width: min(100%, 700px);
-  margin: 0 auto;
-}
-
-.accordion-header {
-  margin-bottom: 2rem;
+.hero {
+  max-width: 700px;
 }
 
 .eyebrow {
-  margin: 0 0 0.5rem;
-  color: #38bdf8;
+  margin: 0;
+  color: #9ca3af;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-.accordion-header h1 {
-  margin: 0;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+.hero h1 {
+  margin: 1rem 0 1.5rem;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  line-height: 1;
 }
 
-.accordion-header p:last-child {
-  color: #94a3b8;
+.hero-text {
+  margin: 0 0 1rem;
+  color: #e5e7eb;
+  font-size: 1.2rem;
   line-height: 1.7;
 }
 
-.faq-list {
-  display: grid;
+.thoughts-container {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
+  max-width: 700px;
+  margin-top: 2rem;
 }
 
-.faq-item {
-  padding: 1rem;
-  background: #1e293b;
+.thought-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
   border: 1px solid #334155;
   border-radius: 1rem;
+  background: #1e293b;
 }
 
-.faq-item button {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
+.thought-text {
+  margin: 0;
   color: #f8fafc;
-  background: transparent;
-  border: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  text-align: left;
+  line-height: 1.5;
 }
 
-.faq-item p {
-  margin-top: 1rem;
-  margin-bottom: 0;
-  color: #cbd5e1;
-  line-height: 1.7;
+.remove-button {
+  border: 0;
+  background: transparent;
+  color: #f8fafc;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.thought-form {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 700px;
+  margin-top: 2rem;
+}
+
+.thought-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.thought-form button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9rem 1.25rem;
+  background: #facc15;
+  color: #111827;
+  font-weight: 700;
+}
+
+.thought-count {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  font-weight: 700;
 }

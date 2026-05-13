@@ -56,7 +56,7 @@ const App = () => {
     });
 
     setTaskInput('');
-    setTaskStatus('todo')
+    setTaskStatus('todo');
   };
 
   const handleDeleteTask = (id) => {
