@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import './App.css';
-import PassingThoughts from './passing-thoughts/PassingThoughts.jsx';
+import NotificationCenter from './notification-center/NotificationCenter.jsx';
+
 
 const App = () => {
-  return <PassingThoughts />
+  return <NotificationCenter />
 };
 
 export default App;
